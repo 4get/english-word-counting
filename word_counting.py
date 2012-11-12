@@ -2,7 +2,7 @@ import sys
 from string import punctuation
 from operator import itemgetter
 
-N = 100
+N = 1000
 words = {}
 
 for filename in sys.argv[1:]:  
@@ -15,10 +15,11 @@ for word in words_gen:
     words[word] = words.get(word, 0) + 1
 
 for word in easy_words_gen:
-    del words[word]
+	if word in words:
+		del words[word]
 
 top_words = sorted(words.items(), key=itemgetter(1), reverse=True)[:N]
 
 for word, frequency in top_words:
-    print ("%s %d" % (word, frequency))
+    print ("%s " % (word, ))
 
