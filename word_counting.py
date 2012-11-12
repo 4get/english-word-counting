@@ -1,13 +1,16 @@
+#!/usr/bin/python
+
 import sys
+import re
 from string import punctuation
 from operator import itemgetter
 
 N = 1000
 words = {}
 
-for filename in sys.argv[1:]:  
-	words_gen = (word.strip(punctuation).lower() for line in open(filename)
-                                         for word in line.split())
+with open(sys.argv[1]) as file: 
+	text = file.read()
+	words_gen = re.split('\W+', text.lower())
 
 easy_words_gen = (word.strip(punctuation).lower() for line in open("easy_words.txt")
                                          for word in line.split())
@@ -18,8 +21,8 @@ for word in easy_words_gen:
 	if word in words:
 		del words[word]
 
-top_words = sorted(words.items(), key=itemgetter(1), reverse=True)[:N]
+top_words = sorted(words.items(), key=itemgetter(1), reverse=True)
 
 for word, frequency in top_words:
-    print ("%s " % (word, ))
+    print ("%d\t\t%s" % (frequency, word))
 
